@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ChatSphere</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="auth">
+<div class="auth-panel">
+<div class="brand-mark">C</div>
+<h2>ChatSphere</h2>
+<p>Private chats for your circle</p>
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+<div class="auth-actions">
+<button onclick="login()">Login</button>
+<button class="secondary" onclick="signup()">Sign Up</button>
+</div>
+</div>
+</div>
+
+<div id="app" style="display:none">
+<div class="sidebar">
+<div class="sidebar-header">
+<div>
+<h2>Chats</h2>
+<span>ChatSphere</span>
+</div>
+<button id="themeBtn" title="Toggle theme">Theme</button>
+</div>
+<div class="search-box">
+<input id="userSearch" placeholder="Search chats">
+</div>
+<div id="usersMeta"></div>
+<div id="users"></div>
+</div>
+<div class="chat">
+<div class="header">
+<div class="chat-title">
+<div class="avatar">C</div>
+<div>
+<span id="chatUser">Select a chat</span>
+<small id="chatStatus">Online messaging</small>
+</div>
+</div>
+</div>
+<div id="messages">
+<div class="welcome-state">
+<div class="welcome-icon">C</div>
+<h2>ChatSphere Web</h2>
+<p>Select a chat from the left to start messaging.</p>
+</div>
+</div>
+<div id="status"></div>
+<div class="composer">
+<input id="messageInput" placeholder="Type a message">
+<span id="charCount">0</span>
+<button id="sendBtn" onclick="sendMessage()" title="Send message">Send</button>
+</div>
+</div>
+</div>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
