@@ -4,8 +4,8 @@ create table if not exists profiles(
  username text unique,
  avatar_url text,
  is_online boolean default false,
- last_seen timestamp,
- created_at timestamp default now()
+ last_seen timestamptz,
+ created_at timestamptz default now()
 );
 
 create table if not exists messages(
@@ -14,8 +14,17 @@ create table if not exists messages(
  receiver_id uuid not null references auth.users(id) on delete cascade,
  message text not null,
  is_read boolean default false,
- created_at timestamp default now()
+ created_at timestamptz default now()
 );
+
+alter table profiles
+alter column last_seen type timestamptz using last_seen at time zone 'UTC',
+alter column created_at type timestamptz using created_at at time zone 'UTC',
+alter column created_at set default now();
+
+alter table messages
+alter column created_at type timestamptz using created_at at time zone 'UTC',
+alter column created_at set default now();
 
 do $$
 begin

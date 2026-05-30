@@ -21,8 +21,13 @@ function getInitial(username) {
     return username.trim().charAt(0).toUpperCase() || 'C';
 }
 
+function parseMessageDate(dateString) {
+    const hasTimezone = /z$|[+-]\d{2}:\d{2}$/i.test(dateString);
+    return new Date(hasTimezone ? dateString : `${dateString}Z`);
+}
+
 function formatDateLabel(dateString) {
-    const date = new Date(dateString);
+    const date = parseMessageDate(dateString);
     const today = new Date();
     const yesterday = new Date();
 
@@ -41,6 +46,20 @@ function formatDateLabel(dateString) {
         month: 'short',
         year: 'numeric'
     });
+}
+
+function formatMessageTime(dateString) {
+    return parseMessageDate(dateString).toLocaleTimeString(undefined, {
+        hour: 'numeric',
+        minute: '2-digit'
+    });
+}
+
+function formatLastSeen() {
+    return `Last updated ${new Date().toLocaleTimeString(undefined, {
+        hour: 'numeric',
+        minute: '2-digit'
+    })}`;
 }
 
 function updateComposerState() {
@@ -138,6 +157,9 @@ function renderUsers(users) {
 
             document.getElementById('chatUser')
                 .textContent = user.username;
+
+            document.getElementById('chatStatus')
+                .textContent = formatLastSeen();
 
             document.querySelector('.chat-title .avatar')
                 .textContent = getInitial(user.username);
@@ -341,8 +363,7 @@ async function loadMessages() {
         body.textContent = msg.message;
 
         const time = document.createElement('small');
-        time.textContent = new Date(msg.created_at)
-            .toLocaleTimeString();
+        time.textContent = formatMessageTime(msg.created_at);
 
         bubble.appendChild(body);
         bubble.appendChild(time);
